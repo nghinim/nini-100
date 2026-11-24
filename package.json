@@ -1,0 +1,13 @@
+{
+  "name": "nini-100",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "NiNi:100 — app theo dõi 100 bài Substack, đọc ghi thẳng vào Notion",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "jsdom": "^31.0.1"
+  }
+}

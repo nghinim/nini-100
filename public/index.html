@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NiNi:100</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#FFF0DC">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="NiNi:100">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --dk:#2B2550;
+  --bg:#FFF0DC; --card:#FFFDF8;
+  --pink:#FF77AE; --pink-l:#FFD9E8;
+  --butter:#FFC62E; --butter-l:#FFF0BF;
+  --mint:#2FD6A0; --mint-l:#C6F6E6;
+  --peach:#FF8F4D; --peach-l:#FFDCC4;
+  --lilac:#9B7BFF; --lilac-l:#E4DAFF;
+  --sky:#35BFF5; --sky-l:#CDEDFC;
+  --soft:#6E64A0;
+  --hs:3px 3px 0 var(--dk);
+  --hs2:5px 5px 0 var(--dk);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;color:var(--dk);font-family:"Nunito",-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:15px;font-weight:600;line-height:1.5;-webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(circle at 8% 5%, #FFC3DC 0 17%, transparent 17.5%),
+    radial-gradient(circle at 94% 2%, #BFEEDC 0 14%, transparent 14.5%),
+    radial-gradient(circle at 86% 42%, #E2D6FF 0 9%, transparent 9.5%),
+    radial-gradient(circle at 4% 54%, #FFE49B 0 8%, transparent 8.5%),
+    radial-gradient(#FFD9A8 2.2px, transparent 2.3px) 0 0/24px 24px,
+    var(--bg);
+}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px 90px}
+h1,h2,h3,h4,.disp{font-family:"Baloo 2",sans-serif;font-weight:800;line-height:1.1;margin:0;letter-spacing:0}
+/* header */
+.top{display:flex;align-items:center;gap:14px;padding:20px 0 16px}
+.top h1{font-size:29px}
+.top .sub{font-size:12.5px;color:var(--soft);font-weight:700;margin-top:2px}
+/* panel base */
+.panel{background:var(--card);border:3px solid var(--dk);border-radius:24px;box-shadow:var(--hs2)}
+/* goal */
+.goal{padding:16px 18px 15px;margin-bottom:22px;position:relative}
+.goal .ribbon{
+  position:absolute;top:-15px;left:22px;background:var(--pink);border:3px solid var(--dk);
+  border-radius:999px;padding:3px 14px;font-family:"Baloo 2",sans-serif;font-size:13.5px;font-weight:700;
+  transform:rotate(-2deg);box-shadow:2px 2px 0 var(--dk);
+}
+.gr{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin:9px 0 14px}
+.gr .num{font-family:"Baloo 2",sans-serif;font-size:42px;font-weight:800;line-height:1}
+.gr .num i{font-style:normal;font-size:16px;color:var(--soft);font-weight:700}
+.gr .sp{flex:1}
+.pill-stat{border:3px solid var(--dk);border-radius:16px;padding:5px 13px;text-align:center;box-shadow:2px 2px 0 var(--dk)}
+.pill-stat b{font-family:"Baloo 2",sans-serif;font-size:19px;display:block;line-height:1.15}
+.pill-stat span{font-size:10.5px;font-weight:800;letter-spacing:.05em}
+.dots{display:grid;grid-template-columns:repeat(25,1fr);gap:5px;margin-bottom:11px}
+.dots i{aspect-ratio:1;border-radius:50%;background:#FFE9CF;border:1.5px solid rgba(43,37,80,.25);display:block;transition:transform .08s ease-out,filter .08s ease-out;cursor:pointer;position:relative}
+.dots i:hover{transform:scale(1.18);z-index:3;filter:brightness(1.12)}
+.dots i.p:hover,.dots i.r:hover,.dots i.w:hover{border-color:var(--dk)}
+.dots i.p{background:var(--mint);border-color:var(--dk)}
+.dots i.r{background:var(--pink);border-color:var(--dk)}
+.dots i.w{background:var(--butter);border-color:var(--dk)}
+.legend{display:flex;gap:13px;flex-wrap:wrap;font-size:11.5px;font-weight:800;color:var(--soft)}
+.legend span{display:flex;align-items:center;gap:5px}
+.sw{width:11px;height:11px;border-radius:50%;border:2px solid var(--dk)}
+/* nav */
+.nav{display:flex;gap:10px;margin-bottom:16px}
+.nav button{
+  flex:1;background:var(--card);border:3px solid var(--dk);border-radius:18px;padding:10px 8px;
+  font-family:"Baloo 2",sans-serif;font-size:15px;font-weight:700;color:var(--dk);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:var(--hs);transition:.12s;
+}
+.nav button:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--dk)}
+.nav button.on{background:var(--butter)}
+/* chips */
+.chips{display:flex;gap:9px;overflow-x:auto;padding:3px 3px 16px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  flex:0 0 auto;background:var(--card);border:3px solid var(--dk);border-radius:999px;padding:6px 14px;
+  font-family:"Baloo 2",sans-serif;font-size:14px;font-weight:700;color:var(--dk);cursor:pointer;white-space:nowrap;
+  display:flex;align-items:center;gap:7px;box-shadow:2px 2px 0 var(--dk);transition:.12s;
+}
+.chip:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--dk)}
+.chip.on{background:var(--pink)}
+.chip .n{background:rgba(51,53,92,.13);border-radius:99px;padding:0 7px;font-size:12px}
+/* bar */
+.bar{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+input.search,select{
+  background:var(--card);border:3px solid var(--dk);border-radius:16px;padding:9px 14px;
+  font-family:"Nunito",sans-serif;font-size:14px;font-weight:700;color:var(--dk);box-shadow:2px 2px 0 var(--dk);
+}
+input.search{flex:1;min-width:165px}
+input:focus,select:focus,textarea:focus{outline:none;background:#FFFBEF}
+/* rows */
+.row{
+  background:var(--card);border:3px solid var(--dk);border-radius:20px;padding:11px 13px;
+  display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:var(--hs);
+}
+.row.click{cursor:pointer;width:100%;text-align:left;font-family:inherit;transition:.12s;color:var(--dk)}
+.row.click:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--dk)}
+.row.click:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--dk)}
+.ic{width:46px;height:46px;border-radius:15px;border:3px solid var(--dk);display:grid;place-items:center;flex:0 0 auto}
+.row .m{flex:1;min-width:0}
+.row .nm{font-family:"Baloo 2",sans-serif;font-size:16px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.row .mt{font-size:12px;color:var(--soft);font-weight:700;margin-top:1px}
+/* 5 pips = status nhìn phát biết */
+.pips{display:flex;gap:4px;margin-top:6px;align-items:center}
+.pips i{width:21px;height:9px;border-radius:99px;border:2px solid var(--dk);background:#FFEFD9;display:block}
+.pips i.on{background:var(--mint)}
+.pips i.cur{background:var(--pink)}
+.pips b{font-size:10.5px;font-weight:800;color:var(--soft);margin-left:4px}
+/* badge */
+.badge{
+  font-family:"Baloo 2",sans-serif;font-size:13px;font-weight:700;padding:5px 12px;border-radius:999px;
+  white-space:nowrap;display:inline-flex;align-items:center;gap:6px;border:3px solid var(--dk);box-shadow:2px 2px 0 var(--dk);
+}
+.b-raw{background:var(--sky-l)}.b-write{background:var(--butter-l)}.b-post{background:var(--pink-l)}
+.b-social{background:var(--lilac-l)}.b-photo{background:var(--peach-l)}.b-done{background:var(--mint-l)}
+/* buttons */
+.btn{
+  background:var(--butter);color:var(--dk);border:3px solid var(--dk);border-radius:16px;padding:9px 18px;
+  font-family:"Baloo 2",sans-serif;font-size:15px;font-weight:700;cursor:pointer;box-shadow:var(--hs);transition:.1s;white-space:nowrap;
+}
+.btn:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--dk)}
+.btn.sm{padding:7px 14px;font-size:14px}
+.btn.ghost{background:var(--card)}
+.btn.pick{background:var(--pink)}
+.btn.on{background:var(--mint)}
+a.btn{text-decoration:none;display:inline-block}
+/* section header */
+.sect{display:flex;align-items:center;gap:10px;margin:24px 0 12px}
+.sect .lb{
+  font-family:"Baloo 2",sans-serif;font-size:16px;font-weight:700;border:3px solid var(--dk);
+  border-radius:999px;padding:5px 15px;box-shadow:var(--hs);display:flex;align-items:center;gap:8px;transform:rotate(-1.2deg);
+}
+.sect .ln{flex:1;height:3px;border-radius:9px;background:repeating-linear-gradient(90deg,var(--dk) 0 8px,transparent 8px 16px);opacity:.3}
+.empty{text-align:center;color:var(--soft);padding:30px 0;font-weight:700}
+.note{font-size:12.5px;color:var(--soft);font-weight:700}
+/* detail */
+.back{background:none;border:none;color:var(--soft);font-family:"Baloo 2",sans-serif;font-size:16px;font-weight:700;cursor:pointer;padding:0;margin:18px 0 12px}
+.dhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:5px}
+.dhead h2{font-size:26px}
+.dsub{font-size:13px;color:var(--soft);font-weight:700;margin-bottom:16px}
+.step{background:var(--card);border:3px solid var(--dk);border-radius:22px;margin-bottom:12px;box-shadow:var(--hs);overflow:hidden}
+.step.now{box-shadow:var(--hs2)}
+.step.now .sh{background:var(--butter-l)}
+.sh{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer}
+.sn{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:"Baloo 2",sans-serif;font-size:15px;font-weight:800;background:#FFEFD9;border:3px solid var(--dk);flex:0 0 auto}
+.sn.ok{background:var(--mint)}
+.sh h4{font-size:17px;flex:1}
+.sh .cv{font-size:12px;color:var(--soft);font-weight:800}
+.sb{padding:14px;border-top:3px dashed rgba(51,53,92,.25)}
+textarea,input.url{
+  width:100%;background:#FFFBF2;border:3px solid var(--dk);border-radius:16px;padding:12px 14px;
+  font-family:"Nunito",sans-serif;font-size:14.5px;line-height:1.65;color:var(--dk);resize:vertical;font-weight:600;
+}
+.lbl{font-family:"Baloo 2",sans-serif;font-size:15px;font-weight:700;margin:0 0 8px;display:flex;align-items:center;gap:7px}
+.acts{display:flex;gap:10px;flex-wrap:nowrap;align-items:center;margin-top:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.acts::-webkit-scrollbar{display:none}
+.acts>*{flex:0 0 auto}
+.acts .note{white-space:nowrap}
+.pre{white-space:pre-wrap;font-size:13.5px;line-height:1.7;background:var(--butter-l);border:3px dashed rgba(51,53,92,.3);border-radius:16px;padding:12px 14px;max-height:160px;overflow:auto;margin-bottom:12px}
+#toast{
+  position:fixed;left:50%;bottom:22px;transform:translate(-50%,16px);background:var(--pink);color:var(--dk);
+  border:3px solid var(--dk);padding:11px 20px;border-radius:999px;font-family:"Baloo 2",sans-serif;font-size:15px;font-weight:700;
+  opacity:0;pointer-events:none;transition:.2s;z-index:9;box-shadow:var(--hs);
+}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ===== LOGO ===== */
+.logo-wrap{position:relative;flex:0 0 auto}
+.logo{
+  width:84px;height:84px;border-radius:50%;border:3px solid var(--dk);background:#FFF3C7;
+  object-fit:contain;padding:5px;box-shadow:var(--hs);display:block;animation:bob 3.4s ease-in-out infinite;
+}
+.logo-wrap .spark{position:absolute;animation:tw 2.2s ease-in-out infinite}
+.logo-wrap .s1{top:-8px;right:-4px}
+.logo-wrap .s2{bottom:-2px;left:-9px;animation-delay:.8s}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-5px) rotate(2deg)}}
+@keyframes tw{0%,100%{transform:scale(.6) rotate(0);opacity:.45}50%{transform:scale(1.15) rotate(25deg);opacity:1}}
+/* ===== MISSION BADGE ===== */
+.mission{
+  position:relative;overflow:hidden;display:flex;align-items:center;gap:14px;
+  background:linear-gradient(135deg,#FFE3EA 0%,#EEE9FD 52%,#FFF3D1 100%);
+  border:3px solid var(--dk);border-radius:24px;padding:13px 16px;box-shadow:var(--hs2);
+  margin-bottom:20px;animation:tilt 6s ease-in-out infinite;
+}
+@keyframes tilt{0%,100%{transform:rotate(-.5deg)}50%{transform:rotate(.5deg)}}
+.mission .shine{
+  position:absolute;top:-60%;left:-40%;width:35%;height:220%;pointer-events:none;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.85),transparent);
+  transform:rotate(14deg);animation:sweep 3.6s ease-in-out infinite;
+}
+@keyframes sweep{0%{left:-45%}55%{left:125%}100%{left:125%}}
+.mission .mlogo{width:60px;height:60px;border-radius:50%;border:3px solid var(--dk);background:#FFF3C7;object-fit:contain;padding:3px;flex:0 0 auto;animation:pop 2.8s ease-in-out infinite}
+@keyframes pop{0%,100%{transform:scale(1) rotate(-3deg)}50%{transform:scale(1.07) rotate(3deg)}}
+.mission .mtx{flex:1;min-width:0;z-index:1}
+.mission .mbig{
+  font-family:"Baloo 2",sans-serif;font-size:22px;font-weight:800;line-height:1.05;
+  letter-spacing:.01em;display:flex;align-items:center;gap:8px;
+}
+.mission .mbig em{font-style:normal;animation:shake 2.4s ease-in-out infinite;display:inline-block}
+@keyframes shake{0%,88%,100%{transform:rotate(0)}91%{transform:rotate(-13deg)}95%{transform:rotate(13deg)}}
+.mission .msub{transition:opacity .25s;font-size:13px;font-weight:800;color:#5B5A7A;margin-top:3px;min-height:19px}
+.mission .mcount{
+  flex:0 0 auto;background:#FFFDF8;border:3px solid var(--dk);border-radius:18px;padding:6px 14px;
+  text-align:center;box-shadow:2px 2px 0 var(--dk);z-index:1;
+}
+.mission .mcount b{font-family:"Baloo 2",sans-serif;font-size:24px;display:block;line-height:1}
+.mission .mcount span{font-size:10px;font-weight:800;letter-spacing:.06em}
+.mission .ms{position:absolute;z-index:0;animation:tw 2.6s ease-in-out infinite}
+.mission .ms.a{top:7px;left:46%}.mission .ms.b{bottom:9px;left:38%;animation-delay:.9s}
+.mission .ms.c{top:40%;right:20%;animation-delay:1.5s}
+/* ===== FLOATING REMINDER ===== */
+.floaty{
+  position:fixed;right:16px;bottom:16px;z-index:8;display:flex;align-items:center;gap:9px;
+  background:var(--butter);border:3px solid var(--dk);border-radius:999px;padding:6px 15px 6px 7px;
+  box-shadow:var(--hs);cursor:pointer;font-family:"Baloo 2",sans-serif;font-weight:700;font-size:14.5px;
+  animation:float 3s ease-in-out infinite;transition:.12s;
+}
+.floaty:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--dk)}
+.floaty img{width:38px;height:38px;border-radius:50%;border:2.5px solid var(--dk);background:#FFF3C7;object-fit:contain;padding:2px}
+.floaty b{display:block;font-size:16px;line-height:1}
+.floaty i{font-style:normal;font-size:10.5px;font-weight:800;color:#6A5B2E;letter-spacing:.04em}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+/* ===== CONFETTI ===== */
+.cfx{position:fixed;inset:0;pointer-events:none;z-index:20;overflow:hidden}
+.cfx i{position:absolute;width:11px;height:14px;border:2px solid var(--dk);border-radius:3px;animation:fall 1.5s ease-in forwards}
+@keyframes fall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(80vh) rotate(540deg);opacity:0}}
+
+/* ===== CHỮ UM SÙM ===== */
+.top h1{
+  font-size:31px;color:#FF3D86;
+  -webkit-text-stroke:2.5px var(--dk);paint-order:stroke fill;
+  text-shadow:3px 3px 0 #FFC62E, 6px 6px 0 rgba(43,37,80,.25);
+  animation:hue 7s linear infinite;
+}
+@keyframes hue{0%,100%{filter:hue-rotate(0)}50%{filter:hue-rotate(25deg)}}
+.top .sub{color:var(--dk);background:var(--butter);border:2.5px solid var(--dk);
+  border-radius:999px;padding:1px 10px;display:inline-block;box-shadow:2px 2px 0 var(--dk);margin-top:5px}
+.gr .num{color:#FF3D86;-webkit-text-stroke:2.5px var(--dk);paint-order:stroke fill;
+  text-shadow:3px 3px 0 var(--butter);animation:beat 2.4s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.gr .num i{-webkit-text-stroke:0;text-shadow:none;color:var(--soft)}
+.goal .ribbon{background:var(--pink);color:#FFF;-webkit-text-stroke:1.6px var(--dk);paint-order:stroke fill;
+  font-size:15px;animation:swing 3.2s ease-in-out infinite;transform-origin:left center}
+@keyframes swing{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(2deg)}}
+.pill-stat b{color:#2B2550}
+.sect .lb{text-shadow:2px 2px 0 rgba(255,255,255,.9)}
+.badge{font-size:13.5px}
+/* marquee */
+.marq{
+  position:relative;overflow:hidden;background:linear-gradient(90deg,#FFCF6B,#FFD3E4,#C8F2DF,#FFCF6B);border:3px solid var(--dk);
+  border-radius:999px;box-shadow:var(--hs);margin:0 0 18px;padding:7px 0;
+}
+.marq .trk{display:flex;gap:26px;white-space:nowrap;animation:slide 16s linear infinite;width:max-content}
+.marq span{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:17px;color:#FFF8DC;
+  -webkit-text-stroke:2.6px var(--dk);paint-order:stroke fill;letter-spacing:.03em}
+@keyframes slide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+/* mission um sùm */
+.mission{
+  background:linear-gradient(118deg,#FFD3E6 0%,#FFE9A3 32%,#BFF2DC 62%,#FFD9C2 84%,#FFD3E6 100%);
+  background-size:260% 260%;animation:tilt 6s ease-in-out infinite, flow 9s ease infinite;
+}
+@keyframes flow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.mission .mbig{font-size:34px;color:var(--dk);-webkit-text-stroke:0;letter-spacing:-.01em;
+  text-shadow:0 2px 0 #FFF,0 3px 0 rgba(43,37,80,.18);gap:2px;flex-wrap:wrap;
+}
+.mission .mbig b{display:inline-block;font-weight:800;animation:hop 1.5s ease-in-out infinite}
+.mission .mbig b.sp{width:.36em;animation:none}
+@keyframes hop{0%,70%,100%{transform:translateY(0) rotate(0)}35%{transform:translateY(-7px) rotate(-5deg)}}
+.mission .msub{color:var(--dk);background:none;border:none;border-radius:0;padding:0;display:block;
+  font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(14px,2.7vw,25px);line-height:1.2;
+  margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-shadow:0 2px 0 rgba(255,255,255,.8)}
+.mission .mcount b{color:#FF1F72;-webkit-text-stroke:0;font-size:30px}
+.mission{box-shadow:var(--hs2);animation:tilt 6s ease-in-out infinite, flow 9s ease infinite, glow 2.6s ease-in-out infinite}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 0 rgba(255,61,134,0))}50%{filter:drop-shadow(0 0 14px rgba(255,61,134,.55))}}
+/* nút + chip rực */
+.nav button.on{background:var(--butter)}
+.chip.on{background:var(--pink);color:#FFF;-webkit-text-stroke:1.5px var(--dk);paint-order:stroke fill}
+.btn{background:var(--butter)}
+.btn.pick{background:var(--pink);color:#FFF;-webkit-text-stroke:1.5px var(--dk);paint-order:stroke fill}
+.btn.on{background:var(--mint);color:#FFF;-webkit-text-stroke:1.5px var(--dk);paint-order:stroke fill}
+.floaty{background:#FFFDF8}
+.floaty b{color:#FF1F72;font-size:19px;-webkit-text-stroke:0}
+.floaty i{color:var(--dk);opacity:.75}
+#toast{background:var(--pink);color:#FFF;-webkit-text-stroke:1.6px var(--dk);paint-order:stroke fill;font-size:16px}
+.pips i.on{background:var(--mint)}.pips i.cur{background:var(--pink);animation:blink 1.1s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.row.click:hover{background:#FFFBEF}
+.ic{box-shadow:2px 2px 0 var(--dk)}
+
+/* Notion + edit */
+.nbtn{
+  flex:0 0 auto;width:34px;height:34px;border-radius:11px;border:3px solid var(--dk);background:#FFF;
+  display:grid;place-items:center;text-decoration:none;box-shadow:2px 2px 0 var(--dk);transition:.1s;
+}
+.nbtn:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--dk)}
+.saveto{
+  font-size:12px;font-weight:800;color:var(--dk);background:var(--sky-l);border:2px solid var(--dk);
+  border-radius:999px;padding:3px 12px;display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;
+  text-decoration:none;box-shadow:2px 2px 0 var(--dk);transition:.1s;
+}
+.saveto:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--dk)}
+.saveto a{color:var(--dk)}
+.viewbox{
+  white-space:pre-wrap;font-size:14px;line-height:1.7;background:#FFFBF2;border:3px solid var(--dk);
+  border-radius:16px;padding:13px 15px;max-height:230px;overflow:auto;
+}
+.links{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px}
+
+/* ===== TYPO VẼ TAY: ruột kem, viền mực dày, chữ nghiêng lắc lư ===== */
+.ink{display:flex;flex-wrap:wrap;align-items:flex-end;line-height:1.05}
+.ink b{
+  display:inline-block;font-family:"Baloo 2",sans-serif;font-weight:800;
+  color:#FFF3C7;-webkit-text-stroke:3.4px var(--dk);paint-order:stroke fill;
+}
+.ink b.sp{width:.34em;-webkit-text-stroke:0}
+.top h1.ink{font-size:36px;color:transparent;-webkit-text-stroke:0;text-shadow:none;animation:none;gap:0}
+.top h1.ink b{font-size:36px}
+.doodle{position:absolute;pointer-events:none;animation:tw 2.6s ease-in-out infinite}
+.topwrap{position:relative}
+.mission .mbig{font-size:34px;color:transparent;-webkit-text-stroke:0;text-shadow:none;gap:0}
+.mission .mbig b{font-size:34px;color:#FFF3C7;-webkit-text-stroke:3.2px var(--dk);paint-order:stroke fill}
+.mission .mbig b.sp{-webkit-text-stroke:0}
+.mission .mbig em{-webkit-text-stroke:0;font-size:30px}
+@media(max-width:600px){
+  .wrap{padding:0 13px 80px}.top h1{font-size:24px}.gr .num{font-size:34px}
+  .dots{grid-template-columns:repeat(20,1fr)}.dhead h2{font-size:21px}
+  .nav button{font-size:14px}.pips i{width:17px}
+  .logo{width:62px;height:62px}.top h1{font-size:25px}.mission .mbig{font-size:25px}.marq span{font-size:13px}.mission .mlogo{width:44px;height:44px}
+  .floaty{right:11px;bottom:12px;font-size:13px}.floaty img{width:30px;height:30px}
+}
+</style>
+</head>
+<body><div class="wrap" id="app"></div><div id="toast"></div>
+<script>
+const DEADLINE=new Date('2026-12-21T23:59:00+07:00'),TARGET=100,DK='#33355C';
+/* ---------- minh hoạ: viền đậm, màu phẳng ---------- */
+const W=(inner,s)=>`<svg width="${s||26}" height="${s||26}" viewBox="0 0 32 32" fill="none" stroke="${DK}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`;
+const ART={
+ 'Việt':{bg:'#FFE3EA',p:`<path d="M5 14h22c0 6.6-4.9 11-11 11S5 20.6 5 14Z" fill="#FFF"/><path d="M3.5 14h25"/><path d="M11 10c0-1.6 1.2-2 1.2-3.6M16 9.4c0-1.6 1.2-2 1.2-3.6M21 10c0-1.6 1.2-2 1.2-3.6"/><path d="M9.5 17.5c2 1.4 4 1.4 6 0s4-1.4 6 0" stroke-width="2"/>`},
+ 'Nhật':{bg:'#E4F2FC',p:`<rect x="4" y="13" width="11" height="12" rx="3" fill="#FFF"/><path d="M4 17.5h11"/><ellipse cx="23" cy="13.5" rx="5.5" ry="3" fill="#FFD9E2"/><path d="M17.5 13.8v5c0 1.7 2.5 3 5.5 3s5.5-1.3 5.5-3v-5" fill="#FFF"/><path d="M17.5 13.8v5c0 1.7 2.5 3 5.5 3s5.5-1.3 5.5-3v-5"/>`},
+ 'Hàn':{bg:'#EEE9FD',p:`<path d="M6 14h20v5.5A6.5 6.5 0 0 1 19.5 26h-7A6.5 6.5 0 0 1 6 19.5V14Z" fill="#FFF"/><path d="M4 14h24"/><path d="M12 10.5c0-1.6 1.2-2 1.2-3.5M19 10.5c0-1.6 1.2-2 1.2-3.5"/><path d="M26 17h3v3.5h-3" fill="#FFD9E2"/>`},
+ 'Hoa':{bg:'#FFE9DC',p:`<path d="M8 18c0-4 3.6-7 8-7s8 3 8 7" fill="#FFF"/><path d="M6 18.5h20a1.5 1.5 0 0 1 1.5 1.5c0 2.2-2 3.8-4.4 3.8H8.9c-2.4 0-4.4-1.6-4.4-3.8A1.5 1.5 0 0 1 6 18.5Z" fill="#FFE3EA"/><path d="M16 11V8M13.6 9.2 16 7l2.4 2.2"/>`},
+ 'Cà phê':{bg:'#FFF3D1',p:`<path d="M6 12h17v7.5a6.5 6.5 0 0 1-6.5 6.5h-4A6.5 6.5 0 0 1 6 19.5V12Z" fill="#FFF"/><path d="M23 14.5h2.5a3 3 0 1 1 0 6H23"/><path d="M11 8.5c0-1.4 1.2-1.7 1.2-3M16.5 8.5c0-1.4 1.2-1.7 1.2-3"/><path d="M6 16h17" stroke-width="2"/>`},
+ 'Âu':{bg:'#E2F5EC',p:`<path d="M8 4.5v8a3 3 0 0 0 6 0v-8M11 4.5v7M8 15.5v12M14 15.5v12"/><path d="M23 4.5c-2 0-3 2.6-3 6.5s1 5.5 3 5.5V4.5Z" fill="#FFF3D1"/><path d="M23 16.5v11"/>`},
+ 'Chay':{bg:'#E2F5EC',p:`<path d="M16 27c0-8 2.6-14 10-15 0 9-4 14-10 15Z" fill="#A4DEC2"/><path d="M16 27c0-5-2-9.5-8-10.5 0 6.5 2.6 10 8 10.5Z" fill="#E2F5EC"/><path d="M16 27v-4"/>`},
+ 'Khác':{bg:'#FFEFD9',p:`<circle cx="16" cy="16" r="11" fill="#FFF"/><circle cx="16" cy="16" r="5.5" fill="#FFE3EA"/>`}
+};
+const icon=(cu,s)=>{const a=ART[cu]||ART['Khác'];return `<span class="ic" style="background:${a.bg};${s?`width:${s}px;height:${s}px;border-radius:18px;`:''}">${W(a.p,s?34:26)}</span>`};
+const M=(p,c,s)=>`<svg width="${s||17}" height="${s||17}" viewBox="0 0 24 24" fill="none" stroke="${c||DK}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const I={
+ pen:'<path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4Z"/><path d="M14.5 5.5 18.5 9.5"/>',
+ note:'<path d="M5 3.5h14v17l-3.5-2.5L12 20.5 8.5 18 5 20.5v-17Z"/><path d="M9 8h6M9 12h4"/>',
+ send:'<path d="M21 3 10.5 13.5M21 3l-7 18-3.5-7.5L3 10l18-7Z"/>',
+ heart:'<path d="M12 20s-7.5-4.6-7.5-9.5A4.2 4.2 0 0 1 12 8a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20Z"/>',
+ cam:'<rect x="3" y="7" width="18" height="13" rx="4"/><circle cx="12" cy="13.5" r="3.5"/><path d="M8.5 7 10 4.5h4L15.5 7"/>',
+ star:'<path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.4l6-.8L12 3Z"/>',
+ grid:'<rect x="3.5" y="3.5" width="7" height="7" rx="2.4"/><rect x="13.5" y="3.5" width="7" height="7" rx="2.4"/><rect x="3.5" y="13.5" width="7" height="7" rx="2.4"/><rect x="13.5" y="13.5" width="7" height="7" rx="2.4"/>',
+ list:'<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.6"/><circle cx="4.5" cy="12" r="1.6"/><circle cx="4.5" cy="18" r="1.6"/>',
+ ext:'<path d="M14 4h6v6M20 4 10.5 13.5"/><path d="M18 14v4.5A2.5 2.5 0 0 1 15.5 21h-9A2.5 2.5 0 0 1 4 18.5v-9A2.5 2.5 0 0 1 6.5 7H11"/>',
+ mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/>'
+};
+/* mascot: tô mì + bạn cơm nắm, vẽ mới */
+const MASCOT=`<svg width="74" height="74" viewBox="0 0 80 80" fill="none" stroke="#33355C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M22 16c0-2.4 1.6-3 1.6-5.4M31 14.5c0-2.4 1.6-3 1.6-5.4" opacity=".85"/>
+ <path d="M44 30c-1-6 2.5-11 8-11s8.6 4.4 8.6 9.6c0 .6-.1 1.2-.2 1.8" fill="#FFF0D4"/>
+ <path d="M48.5 20.5 52 15l3.6 5.5" fill="#FFB3C7"/><path d="M48.5 20.5 52 15l3.6 5.5"/>
+ <circle cx="49.5" cy="26" r="1.6" fill="#33355C" stroke="none"/><circle cx="55.5" cy="26" r="1.6" fill="#33355C" stroke="none"/>
+ <path d="M51.5 29c1 .9 2.4.9 3.4 0"/>
+ <path d="M10 31h58c0 15-11.5 26-29 26S10 46 10 31Z" fill="#FFFDF8"/>
+ <path d="M8 31h62"/>
+ <path d="M14 38h50" stroke="#FFB3C7" stroke-width="7" stroke-linecap="butt" opacity=".9"/>
+ <path d="M14 38h50" stroke-width="0"/>
+ <circle cx="30" cy="46" r="2.2" fill="#33355C" stroke="none"/><circle cx="48" cy="46" r="2.2" fill="#33355C" stroke="none"/>
+ <path d="M35.5 50.5c1.8 1.8 5.2 1.8 7 0"/>
+ <circle cx="23.5" cy="49" r="3" fill="#FFB3C7" stroke="none" opacity=".85"/>
+ <circle cx="54.5" cy="49" r="3" fill="#FFB3C7" stroke="none" opacity=".85"/>
+ <path d="M4 62h72"/>
+</svg>`;
+const EMPTY=`<svg width="104" height="86" viewBox="0 0 110 92" fill="none" stroke="#33355C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".55">
+ <path d="M26 40h58c0 15-11.5 26-29 26S26 55 26 40Z" fill="#FFFDF8"/><path d="M24 40h62"/>
+ <circle cx="46" cy="52" r="2.2" fill="#33355C" stroke="none"/><circle cx="64" cy="52" r="2.2" fill="#33355C" stroke="none"/>
+ <path d="M51 58c1.6-1.4 5.4-1.4 7 0"/>
+ <path d="M40 30c0-3 2-3.6 2-6M55 28.5c0-3 2-3.6 2-6M70 30c0-3 2-3.6 2-6"/>
+ <path d="M18 72h74"/>
+</svg>`;
+/* ---------- data ---------- */
+const NOT='https://app.notion.com/';
+const CONTENT_DB=NOT+'p/0c533d65705c4ab6badddd576b158ecd';
+let QUAN=[], PROJ=[];
+const has=s=>!!(s&&s.trim());
+function phaseOf(p){
+ if(p.posted&&has(p.ig)&&has(p.fanpage)&&p.photos)return'done';
+ if(p.posted&&has(p.ig)&&has(p.fanpage))return'photo';
+ if(p.posted)return'social';
+ if(has(p.long))return'post';
+ if(has(p.raw))return'write';
+ return'raw';
+}
+const PH={
+ raw:{lb:'Cần raw note',cls:'b-raw',ic:I.note,hint:'nhớ lại quán này ăn gì'},
+ write:{lb:'Cần viết bài',cls:'b-write',ic:I.pen,hint:'dựng bản long từ raw note'},
+ post:{lb:'Chờ đăng',cls:'b-post',ic:I.send,hint:'bài xong rồi, đăng là tính điểm'},
+ social:{lb:'Cần IG + FB',cls:'b-social',ic:I.heart,hint:'rút gọn từ bản long'},
+ photo:{lb:'Cần hình',cls:'b-photo',ic:I.cam,hint:'edit hình, làm Canva'},
+ done:{lb:'Đủ bộ',cls:'b-done',ic:I.star,hint:'xong hết rồi'}
+};
+const ORDER=['post','write','raw','social','photo','done'];
+const badge=k=>`<span class="badge ${PH[k].cls}">${M(PH[k].ic)}${PH[k].lb}</span>`;
+function stepsOf(p){return[has(p.raw)||has(p.long),has(p.long),p.posted,has(p.ig)&&has(p.fanpage),p.photos]}
+function pips(p){
+ const st=stepsOf(p),n=st.filter(Boolean).length,cur=st.indexOf(false);
+ return `<div class="pips">${st.map((v,i)=>`<i class="${v?'on':(i===cur?'cur':'')}"></i>`).join('')}<b>${n}/5</b></div>`;
+}
+function daysLeft(){return Math.max(0,Math.ceil((DEADLINE-new Date())/86400000))}
+function stats(){return{posted:PROJ.filter(p=>p.posted).length,ready:PROJ.filter(p=>!p.posted&&has(p.long)).length,prog:PROJ.filter(p=>!p.posted&&!has(p.long)&&has(p.raw)).length,d:daysLeft()}}
+function esc(s){return(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),2100)}
+let S={tab:'queue',open:null,step:null,q:'',quan:'all',filter:'all',onlyLiked:false,edit:{},onlyDadi:false};
+function dotMap(){
+ const a=PROJ.filter(p=>p.posted),b=PROJ.filter(p=>!p.posted&&has(p.long)),c=PROJ.filter(p=>!p.posted&&!has(p.long)&&has(p.raw));
+ return a.concat(b,c);
+}
+function dotGo(id){openP(id)}
+function dotEmpty(){S.tab='kho';S.open=null;render();toast('Ô này còn trống, pick thêm quán nha')}
+function goal(){
+ const s=stats(),need=Math.max(0,TARGET-s.posted),per=s.d?(need/s.d).toFixed(1):need;
+ const mp=dotMap();let d='';
+ for(let i=0;i<TARGET;i++){
+  let c='';if(i<s.posted)c='p';else if(i<s.posted+s.ready)c='r';else if(i<s.posted+s.ready+s.prog)c='w';
+  const q=mp[i];
+  d+= q ? `<i class="${c}" title="${esc(q.ten)} — ${PH[phaseOf(q)].lb}" onclick="dotGo('${q.id}')"></i>`
+        : `<i title="Ô trống — pick thêm quán" onclick="dotEmpty()"></i>`;
+ }
+ return `<div class="panel goal"><span class="ribbon">100 bài lên sóng</span>
+  <div class="gr"><span class="num">${s.posted}<i>/${TARGET} bài</i></span><span class="sp"></span>
+   <div class="pill-stat" style="background:#FFFDF8"><b>${s.d} ngày</b><span>TỚI 21/12</span></div>
+   <div class="pill-stat" style="background:#FFFDF8"><b style="color:#FF1F72">${per}</b><span>BÀI MỖI NGÀY</span></div></div>
+  <div class="dots">${d}</div>
+  <div class="legend">
+   <span><i class="sw" style="background:var(--mint)"></i>${s.posted} đã đăng</span>
+   <span><i class="sw" style="background:var(--pink)"></i>${s.ready} chờ đăng</span>
+   <span><i class="sw" style="background:var(--butter)"></i>${s.prog} có raw note</span>
+   <span><i class="sw" style="background:#FFE9CF"></i>${Math.max(0,TARGET-s.posted-s.ready-s.prog)} còn trống</span>
+  </div></div>`;
+}
+
+const STAR='<svg width="18" height="18" viewBox="0 0 24 24" fill="#FFD978" stroke="#33355C" stroke-width="2.4" stroke-linejoin="round"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.4l6-.8L12 3Z"/></svg>';
+const LINES=n=>[
+ 'Còn '+n+' bài là xong năm 2026.',
+ '100 bài trước 21/12, nhớ nha!',
+ 'Quán ăn rồi, tới lượt con chữ.',
+ 'Mỗi ngày vài bài là kịp.',
+ 'Xong một bài, sáng một ô.'
+];
+const MARQ=(()=>{const t='★ 100 BÀI SUBSTACK TRƯỚC 21/12 ★ KẾT NĂM 2026 CHO ĐÃ ★ U CAN DO IT ★ VIẾT ĐI RỒI ĂN TIẾP ';
+ return `<div class="marq"><div class="trk"><span>${t}</span><span>${t}</span></div></div>`})();
+const WOB=[-5,3,-2,4,-3,5,-4,2,-1,4,-5,3,2,-3,5,-2];
+function ink(t){return t.split('').map((c,i)=>c===' '
+  ? '<b class="sp"></b>'
+  : `<b style="transform:rotate(${WOB[i%WOB.length]}deg) translateY(${(i%3-1)*2}px)">${c}</b>`).join('')}
+function mission(){
+  const s=stats(),left=Math.max(0,TARGET-s.posted);
+  return `<div class="mission"><div class="shine"></div>
+    <img class="mlogo" src="nini.gif" alt="">
+    <div class="mtx"><div class="mbig">${ink('U CAN DO IT!')} <em>🔥</em></div>
+      <div class="msub" id="mline">${LINES(left)[0]}</div></div>
+    <div class="mcount"><b>${left}</b><span>BÀI NỮA</span></div></div>`;
+}
+function floaty(){
+  const s=stats(),left=Math.max(0,TARGET-s.posted);
+  return `<div class="floaty" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Mục tiêu 100 bài trước 21/12">
+    <img src="nini.gif" alt=""><span><b>${left} bài</b><i>CÒN ${s.d} NGÀY</i></span></div>`;
+}
+let _li=0;
+setInterval(()=>{
+  const el=document.getElementById('mline');if(!el)return;
+  const s=stats(),L=LINES(Math.max(0,TARGET-s.posted));
+  _li=(_li+1)%L.length;el.style.opacity=0;
+  setTimeout(()=>{el.textContent=L[_li];el.style.opacity=1},260);
+},4200);
+function confetti(){
+  const c=document.createElement('div');c.className='cfx';
+  const cols=['#FF3D86','#FFC62E','#2FD6A0','#9B7BFF','#35BFF5','#FF8F4D'];
+  for(let i=0;i<40;i++){
+    const x=document.createElement('i');
+    x.style.left=(8+Math.random()*84)+'%';x.style.top=(-8-Math.random()*18)+'%';
+    x.style.background=cols[i%cols.length];x.style.animationDelay=(Math.random()*.35)+'s';
+    x.style.transform='rotate('+(Math.random()*360)+'deg)';c.appendChild(x);
+  }
+  document.body.appendChild(c);setTimeout(()=>c.remove(),2000);
+}
+
+let _view='';
+function render(){
+ const v=(S.open||'list')+'|'+S.tab, y=window.scrollY;
+ document.getElementById('app').innerHTML=S.open?detail():shell();
+ if(v!==_view){_view=v;window.scrollTo({top:0})} else window.scrollTo({top:y});
+}
+function shell(){
+ const nav=[['queue','Hàng đợi viết',I.list],['kho','Kho quán ('+QUAN.length+')',I.grid]]
+  .map(([k,l,ic])=>`<button class="${S.tab===k?'on':''}" onclick="go('${k}')">${M(ic,DK,18)}${l}</button>`).join('');
+ return `<div class="top topwrap"><span class="logo-wrap"><img class="logo" src="nini.gif" alt="NiNi:100">
+   <span class="spark s1">${STAR}</span><span class="spark s2">${STAR}</span></span><div><h1 class="ink">${ink('NiNi:100')}</h1><div class="sub">100 bài Substack trước 21/12</div></div>
+  <svg class="doodle" style="top:4px;right:16px" width="40" height="34" viewBox="0 0 40 34" fill="none" stroke="#FFF" stroke-width="3" stroke-linecap="round"><path d="M4 12c4-7 11-4 8 1s-9 1-5-5"/><path d="M22 6l3 6M31 4l1 7M36 12l-5 3"/></svg>
+  <svg class="doodle" style="bottom:-2px;left:58px;animation-delay:.9s" width="34" height="26" viewBox="0 0 34 26" fill="none" stroke="#FFF" stroke-width="3" stroke-linecap="round"><path d="M30 14c-4 7-11 4-8-1s9-1 5 5"/><path d="M12 20l-3-6M4 22l-1-7"/></svg></div>
+  ${MARQ}${mission()}${goal()}<div class="nav">${nav}</div>${S.tab==='queue'?queue():kho()}`;
+}
+function queue(){
+ if(!PROJ.length)return `<div class="empty">${EMPTY}<div style="margin-top:8px">Chưa pick quán nào, qua Kho quán chọn nha.</div></div>`;
+ const chips=[['all','Tất cả']].concat(ORDER.map(k=>[k,PH[k].lb]))
+  .map(([k,l])=>{const n=k==='all'?PROJ.length:PROJ.filter(p=>phaseOf(p)===k).length;
+   return `<button class="chip ${S.filter===k?'on':''}" onclick="setF('${k}')">${l}<span class="n">${n}</span></button>`}).join('');
+ let out='';
+ ORDER.forEach(k=>{
+  if(S.filter!=='all'&&S.filter!==k)return;
+  const it=PROJ.filter(p=>phaseOf(p)===k);if(!it.length)return;
+  out+=`<div class="sect"><span class="lb ${PH[k].cls}">${M(PH[k].ic)}${PH[k].lb} · ${it.length}</span><span class="ln"></span></div>`;
+  out+=it.map(p=>`<button class="row click" onclick="openP('${p.id}')">${icon(p.cuisine)}
+   <div class="m"><div class="nm">${esc(p.ten)}</div><div class="mt">${esc(p.quan)} · ${PH[k].hint}</div>${pips(p)}</div>
+   ${badge(k)}</button>`).join('');
+ });
+ return `<div class="chips">${chips}</div>${out||`<div class="empty">${EMPTY}<div style="margin-top:8px">Chặng này đang trống.</div></div>`}`;
+}
+function kho(){
+ const ds=[...new Set(QUAN.map(q=>q.quan))].sort();
+ const opts=['all'].concat(ds).map(d=>`<option value="${d}" ${S.quan===d?'selected':''}>${d==='all'?'Tất cả quận':d}</option>`).join('');
+ const list=QUAN.filter(q=>(S.quan==='all'||q.quan===S.quan)&&(!S.onlyLiked||q.thich)&&(!S.onlyDadi||q.dadi)&&(!S.q||q.ten.toLowerCase().includes(S.q.toLowerCase())));
+ const rows=list.length?list.map(q=>`<div class="row">${icon(q.cuisine)}
+   <div class="m"><div class="nm">${q.thich?M(I.heart,'#E86A8E'):''}${esc(q.ten)}</div>
+   <div class="mt">${esc(q.quan)} · món ${esc(q.cuisine)}</div></div>
+   <a class="nbtn" href="${q.url}" target="_blank" title="Mở quán trong Notion">${M(I.ext)}</a>
+   <button class="btn sm ${q.picked?'on':'pick'}" onclick="pick('${q.id}')">${q.picked?'Đã pick ✓':'Pick'}</button></div>`).join('')
+  :`<div class="empty">${EMPTY}<div style="margin-top:8px">Không tìm thấy quán nào.</div></div>`;
+ return `<div class="bar"><input class="search" placeholder="Tìm tên quán…" value="${esc(S.q)}" oninput="setQ(this.value)">
+   <select onchange="setQuan(this.value)">${opts}</select>
+   <button class="chip ${S.onlyLiked?'on':''}" onclick="toggleLiked()">${M(I.heart,'#E86A8E')}Quán thích</button>
+   <button class="chip ${S.onlyDadi?'on':''}" onclick="S.onlyDadi=!S.onlyDadi;render()">Đã đi rồi</button></div>
+  <div class="note" style="margin-bottom:13px">Đang hiện ${list.length}/${QUAN.length} quán · đã pick ${PROJ.length}/${TARGET} · ${QUAN.filter(q=>q.dadi).length} quán đã đi</div>${rows}`;
+}
+function fieldBox(p,key,ph,rows,saveto){
+ const v=p[key]||'';
+ const url=p.url||CONTENT_DB;
+ if(has(v)&&!S.edit[key]) return `<div class="viewbox">${esc(v)}</div>
+   <div class="acts"><button class="btn" onclick="startEdit('${key}')">${M(I.pen)} Sửa</button>
+   <button class="btn ghost" onclick="cp('${key}')">Copy</button>
+   <a class="btn ghost" href="${url}" target="_blank">${M(I.ext)} Mở Notion</a>
+   <span class="note">${v.trim().length} chữ</span>`;
+ return `<textarea rows="${rows}" oninput="ed('${key}',this.value)" placeholder="${ph}">${esc(v)}</textarea>
+   <div class="acts"><button class="btn" onclick="saveField('${key}')">Lưu vào Notion</button>
+   <a class="btn ghost" href="${url}" target="_blank">${M(I.ext)} Mở Notion</a>`;
+}
+function detail(){
+ const p=PROJ.find(x=>x.id===S.open),cur=phaseOf(p),st=stepsOf(p);
+ const S5=[
+  {k:'raw',n:1,t:'Raw note',ok:st[0],cv:has(p.raw)?'đã có':(has(p.long)?'bỏ qua':'chưa có'),b:()=>`
+    <label class="lbl">${M(I.note)}Quán này ăn gì, vị ra sao, chỗ ngồi thế nào</label>
+    ${fieldBox(p,'raw','Gõ nhanh thôi, không cần câu cú…',5,'Content Working → <b>Raw Note – Final</b>')}
+    <button class="btn ghost" onclick="toast('Demo: mở Telegram bot đọc raw note bằng giọng')">${M(I.mic)} Đọc bằng giọng</button>
+    <span class="note">Chặng chậm nhất, làm gọn hết mức.</span></div>`},
+  {k:'long',n:2,t:'Bài Substack',ok:st[1],cv:has(p.long)?p.long.trim().length+' chữ':'chưa viết',b:()=>`
+    ${fieldBox(p,'long','Bản long version…',11,'Content Working → <b>Long Version – Final</b>')}
+    <button class="btn ghost" onclick="toast('Demo: gọi skill nini-food-blog dựng bản long')">${M(I.pen)} Viết giùm</button></div>`},
+  {k:'post',n:3,t:'Đăng Substack',ok:st[2],cv:p.posted?'đã đăng':(p.substack?'có draft':'chưa'),b:()=>`
+    <label class="lbl">${M(I.send)}Link bài trên Substack</label>
+    <input class="url" value="${esc(p.substack)}" oninput="ed('substack',this.value)" placeholder="dán link sau khi đăng">
+    <div class="acts"><button class="btn ${p.posted?'on':'pick'}" onclick="togglePost()">${p.posted?'Đã đăng ✓':'Đánh dấu đã đăng'}</button>
+    ${p.substack?`<a class="btn ghost" href="${esc(p.substack)}" target="_blank">Mở Substack ↗</a>`:''}
+    <span class="note">Bấm là một ô trên thanh 100 sáng lên.</span></div>`},
+  {k:'social',n:4,t:'Bản Instagram + fanpage',ok:st[3],cv:(has(p.ig)?'IG ✓ ':'IG — ')+(has(p.fanpage)?'FB ✓':'FB —'),b:()=>`
+    ${has(p.long)?`<div class="note" style="margin-bottom:8px">Rút từ bản long:</div><div class="pre">${esc(p.long.slice(0,230))}…</div>`:''}
+    <label class="lbl">${M(I.heart)}Caption Instagram</label>
+    ${fieldBox(p,'ig','bản ngắn cho IG',4,'Content Working → <b>Short Version – Final</b>')}
+    <button class="btn ghost" onclick="toast('Demo: gọi skill nini-food-instagram')">Rút giùm</button></div>
+    <label class="lbl" style="margin-top:16px">${M(I.heart)}Bài fanpage</label>
+    ${fieldBox(p,'fanpage','bản fanpage Facebook',4,'Content Working → <b>Fanpage – Final</b> (field cần tạo thêm)')}
+    <button class="btn ghost" onclick="toast('Demo: gọi skill nini-food-fanpage')">Rút giùm</button></div>
+    <label class="lbl" style="margin-top:16px">Review Google Maps</label>
+    ${fieldBox(p,'gmap','2 đoạn',3,'Content Working → <b>Google Map Version – Final</b>')}</div>`},
+  {k:'photo',n:5,t:'Hình và Canva',ok:st[4],cv:p.photos?'xong':'để cuối',b:()=>`
+    <label class="lbl">${M(I.cam)}Link Canva</label>
+    <input class="url" value="${esc(p.canva)}" oninput="ed('canva',this.value)" placeholder="dán link Canva">
+    <label class="lbl" style="margin-top:14px">Folder Drive</label>
+    <input class="url" value="${esc(p.drive)}" oninput="ed('drive',this.value)" placeholder="dán link folder hình">
+    <div class="acts"><button class="btn ${p.photos?'on':'pick'}" onclick="togglePhoto()">${p.photos?'Hình xong ✓':'Đánh dấu hình xong'}</button>
+    <span class="note">Chặng này không chặn việc đăng bài.</span></div>`}
+ ];
+ const html=S5.map(s=>{
+  const open=S.step===s.k||(S.step===null&&s.k===cur);
+  return `<div class="step ${open?'now':''}"><div class="sh" onclick="openStep('${s.k}')">
+   <span class="sn ${s.ok?'ok':''}">${s.ok?'✓':s.n}</span><h4>${s.t}</h4><span class="cv">${esc(s.cv)}</span></div>
+   ${open?`<div class="sb">${s.b()}</div>`:''}</div>`}).join('');
+ return `<button class="back" onclick="S.open=null;render()">← Hàng đợi</button>
+  <div class="dhead">${icon(p.cuisine,52)}<h2>${esc(p.ten)}</h2>${badge(cur)}</div>
+  <div class="dsub">${esc(p.quan)} · món ${esc(p.cuisine)} · ${stepsOf(p).filter(Boolean).length}/5 bước</div>
+  <div class="links">
+    ${p.quanUrl?`<a class="btn ghost sm" href="${p.quanUrl}" target="_blank">${M(I.ext)} Quán trong Notion</a>`:''}
+    <a class="btn ghost sm" href="${p.url||CONTENT_DB}" target="_blank">${M(I.ext)} Row content</a>
+  </div>${html}`;
+}
+function go(t){S.tab=t;render()}
+function setF(k){S.filter=k;render()}
+function setQ(v){S.q=v;const el=document.activeElement,pos=el.selectionStart;render();const n=document.querySelector('.search');if(n){n.focus();n.setSelectionRange(pos,pos)}}
+function setQuan(v){S.quan=v;render()}
+function toggleLiked(){S.onlyLiked=!S.onlyLiked;render()}
+function openP(id){S.open=id;S.step=null;S.edit={};render()}
+function openStep(k){S.step=S.step===k?'__none__':k;render()}
+function P(){return PROJ.find(x=>x.id===S.open)}
+function ed(k,v){P()[k]=v}
+function startEdit(k){S.edit[k]=true;render()}
+function cp(k){const t=P()[k]||'';if(navigator.clipboard)navigator.clipboard.writeText(t).catch(()=>{});toast('Đã copy')}
+
+/* ===== nói chuyện với Notion qua API của app ===== */
+let PASS=localStorage.getItem('nini_pass')||'';
+async function api(path,opts={}){
+  const r=await fetch(path,{...opts,headers:{'Content-Type':'application/json','x-pass':PASS}});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok) throw Object.assign(new Error(j.error||('Lỗi '+r.status)),{status:r.status});
+  return j;
+}
+let SAVING=false;
+async function push(p,fields,okMsg){
+  if(SAVING)return; SAVING=true; toast('Đang ghi vào Notion…');
+  try{ await api('/api/save',{method:'POST',body:JSON.stringify({pageId:p.id,fields})});
+       toast(okMsg||'Đã ghi vào Notion ✓'); }
+  catch(e){ toast('Ghi hỏng: '+e.message); }
+  SAVING=false; render();
+}
+function saveField(k){const p=P();S.edit[k]=false;push(p,{[k]:p[k]})}
+function save(){const p=P();push(p,{canva:p.canva,drive:p.drive})}
+function togglePost(){
+  const p=P(); p.posted=!p.posted; S.step=null;
+  push(p,{posted:p.posted,substack:p.substack},p.posted?('Tính 1 bài · còn '+(TARGET-stats().posted)+' bài nữa'):'Đã bỏ đánh dấu');
+  if(p.posted)confetti();
+}
+function togglePhoto(){const p=P();p.photos=!p.photos;push(p,{photos:p.photos})}
+async function pick(id){
+  const q=QUAN.find(x=>x.id===id);
+  if(q.picked){toast('Quán này đã có row trong Notion, xoá thì xoá trong Notion nha');return}
+  toast('Đang tạo row trong Notion…');
+  try{
+    const r=await api('/api/pick',{method:'POST',body:JSON.stringify({quanId:q.id,ten:q.ten})});
+    q.picked=true;
+    PROJ.push({id:r.id,url:r.url,ten:q.ten,quan:q.quan,cuisine:q.cuisine,quanUrl:q.url,
+      raw:'',long:'',ig:'',fanpage:'',gmap:'',substack:'',canva:'',drive:'',posted:false,photos:false});
+    render(); toast('Đã thêm · hàng đợi có '+PROJ.length+' quán');
+  }catch(e){ toast('Không tạo được: '+e.message); }
+}
+
+/* ===== mở app ===== */
+function gate(msg){
+  document.getElementById('app').innerHTML=`<div class="top topwrap" style="justify-content:center">
+    <span class="logo-wrap"><img class="logo" src="nini.gif" alt=""></span></div>
+    <div class="panel goal" style="text-align:center">
+      <div style="font-family:'Baloo 2';font-size:22px;font-weight:800;margin-bottom:4px">NiNi:100</div>
+      <div class="note" style="margin-bottom:14px">${esc(msg||'Nhập mã để mở app')}</div>
+      <input class="search" id="pw" type="password" placeholder="mã mở app" style="max-width:260px;margin:0 auto 12px;display:block">
+      <button class="btn" onclick="savePass()">Vô bếp thôi</button>
+    </div>`;
+  const el=document.getElementById('pw');
+  el.focus(); el.onkeydown=e=>{if(e.key==='Enter')savePass()};
+}
+function savePass(){
+  PASS=document.getElementById('pw').value.trim();
+  localStorage.setItem('nini_pass',PASS); boot();
+}
+async function boot(){
+  document.getElementById('app').innerHTML='<div class="empty" style="padding-top:60px">Đang lấy dữ liệu từ Notion…</div>';
+  try{
+    const [a,b]=await Promise.all([api('/api/quan'),api('/api/projects')]);
+    QUAN=a.quan.map(q=>({...q,picked:false}));
+    const byId={}; QUAN.forEach(q=>byId[q.id]=q);
+    PROJ=b.projects.map(p=>{
+      const q=byId[p.quanId]||{};
+      if(q.id)q.picked=true;
+      return {...p,quan:q.quan||'—',cuisine:q.cuisine||'Khác',quanUrl:q.url||''};
+    });
+    _view=''; render();
+  }catch(e){
+    if(e.status===401){ gate('Mã chưa đúng, nhập lại giúp mình'); return; }
+    document.getElementById('app').innerHTML=`<div class="empty" style="padding-top:60px">
+      Không lấy được dữ liệu từ Notion.<br><br>${esc(e.message)}<br><br>
+      <button class="btn" onclick="boot()">Thử lại</button></div>`;
+  }
+}
+boot();
+</script></body></html>
