@@ -20,23 +20,13 @@ Làm y như vậy với trang **Danh sách quán hốc**.
 
 Thiếu bước này thì app sẽ báo lỗi 404 vì integration không thấy database.
 
-## Bước 3 — đưa code lên GitHub
+## Bước 3 — code đã nằm trên GitHub rồi
 
-Giải nén folder này ra, rồi trong Terminal:
-
-```bash
-cd nini-100
-git init
-git add .
-git commit -m "NiNi:100"
-gh repo create nini-100 --private --source=. --push
-```
-
-Không xài `gh` thì tạo repo trống trên github.com rồi `git remote add origin <link>` và `git push -u origin main`.
+Repo: https://github.com/nghinim/nini-100, nhánh `main`. Bỏ qua bước này.
 
 ## Bước 4 — deploy Vercel
 
-Vào vercel.com, New Project, import repo vừa tạo. Framework để Other, không cần build command.
+Vào https://vercel.com/new, bấm Import Git Repository, chọn `nghinim/nini-100`. Lần đầu Vercel sẽ xin quyền đọc GitHub, bấm đồng ý. Framework để Other, không cần build command.
 
 Trước khi bấm Deploy, mở mục Environment Variables và thêm bốn biến:
 
