@@ -543,11 +543,11 @@ function kho(){
  const ds=[...new Set(QUAN.map(q=>q.quan))].sort();
  const opts=['all'].concat(ds).map(d=>`<option value="${d}" ${S.quan===d?'selected':''}>${d==='all'?'Tất cả quận':d}</option>`).join('');
  const list=QUAN.filter(q=>(S.quan==='all'||q.quan===S.quan)&&(!S.onlyLiked||q.thich)&&(!S.onlyDadi||q.dadi)&&(!S.q||q.ten.toLowerCase().includes(S.q.toLowerCase())));
- const rows=list.length?list.map(q=>`<div class="row">${icon(q.cuisine)}
+ const rows=list.length?list.map(q=>`<div class="row ${q.picked?'click':''}" ${q.picked?`onclick="openFromQuan('${q.id}')"`:''}>${icon(q.cuisine)}
    <div class="m"><div class="nm">${q.thich?M(I.heart,'#E86A8E'):''}${esc(q.ten)}</div>
-   <div class="mt">${esc(q.quan)} · món ${esc(q.cuisine)}</div></div>
-   <a class="nbtn" href="${q.url}" target="_blank" title="Mở quán trong Notion">${M(I.ext)}</a>
-   <button class="btn sm ${q.picked?'on':'pick'}" onclick="${q.picked?`openFromQuan('${q.id}')`:`pick('${q.id}')`}">${q.picked?'Viết tiếp →':'Pick'}</button></div>`).join('')
+   <div class="mt">${esc(q.quan)} · món ${esc(q.cuisine)}${q.picked?' · bấm vô để viết':''}</div></div>
+   <a class="nbtn" href="${q.url}" target="_blank" title="Mở quán trong Notion" onclick="event.stopPropagation()">${M(I.ext)}</a>
+   <button class="btn sm ${q.picked?'on':'pick'}" onclick="event.stopPropagation();${q.picked?`openFromQuan('${q.id}')`:`pick('${q.id}')`}">${q.picked?'Đã pick ✓':'Pick'}</button></div>`).join('')
   :`<div class="empty">${EMPTY}<div style="margin-top:8px">Không tìm thấy quán nào.</div></div>`;
  return `<div class="bar"><input class="search" id="ksearch" placeholder="Tìm tên quán…" value="${esc(S.q)}" oninput="setQ(this.value)">
    <select onchange="setQuan(this.value)">${opts}</select>
@@ -667,8 +667,7 @@ async function pick(id){
     q.picked=true;
     PROJ.push({id:r.id,url:r.url,ten:q.ten,quan:q.quan,cuisine:q.cuisine,quanUrl:q.url,quanId:q.id,
       raw:'',long:'',ig:'',fanpage:'',gmap:'',substack:'',canva:'',drive:'',posted:false,photos:false});
-    S.tab='queue'; S.open=r.id; S.step=null; S.edit={}; _view='';
-    render(); toast('Đã thêm vô Notion · viết luôn nha');
+    render(); toast('Đã pick · bấm vô quán đó là viết được');
   }catch(e){ toast('Không tạo được: '+e.message); }
 }
 
