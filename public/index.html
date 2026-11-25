@@ -429,7 +429,7 @@ function daysLeft(){return Math.max(0,Math.ceil((DEADLINE-new Date())/86400000))
 function stats(){return{posted:PROJ.filter(p=>p.posted).length,ready:PROJ.filter(p=>!p.posted&&has(p.long)).length,prog:PROJ.filter(p=>!p.posted&&!has(p.long)&&has(p.raw)).length,d:daysLeft()}}
 function esc(s){return(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),2100)}
-let S={tab:'queue',open:null,step:null,q:'',quan:'all',filter:'all',onlyLiked:false,edit:{},onlyDadi:false};
+let S={tab:'queue',open:null,step:null,q:'',qq:'',quan:'all',filter:'all',onlyLiked:false,edit:{},onlyDadi:false};
 function dotMap(){
  const a=PROJ.filter(p=>p.posted),b=PROJ.filter(p=>!p.posted&&has(p.long)),c=PROJ.filter(p=>!p.posted&&!has(p.long)&&has(p.raw));
  return a.concat(b,c);
@@ -521,19 +521,23 @@ function shell(){
 }
 function queue(){
  if(!PROJ.length)return `<div class="empty">${EMPTY}<div style="margin-top:8px">Chưa pick quán nào, qua Kho quán chọn nha.</div></div>`;
+ const hit=p=>!S.qq||p.ten.toLowerCase().includes(S.qq.toLowerCase())||(p.quan||'').toLowerCase().includes(S.qq.toLowerCase());
+ const bar=`<div class="bar"><input class="search" id="qsearch" placeholder="Tìm quán trong hàng đợi…" value="${esc(S.qq)}" oninput="setQQ(this.value)">
+   ${S.qq?`<button class="chip" onclick="setQQ('')">Xoá tìm</button>`:''}</div>`;
  const chips=[['all','Tất cả']].concat(ORDER.map(k=>[k,PH[k].lb]))
   .map(([k,l])=>{const n=k==='all'?PROJ.length:PROJ.filter(p=>phaseOf(p)===k).length;
    return `<button class="chip ${S.filter===k?'on':''}" onclick="setF('${k}')">${l}<span class="n">${n}</span></button>`}).join('');
+ const tim=PROJ.filter(hit).length;
  let out='';
  ORDER.forEach(k=>{
   if(S.filter!=='all'&&S.filter!==k)return;
-  const it=PROJ.filter(p=>phaseOf(p)===k);if(!it.length)return;
+  const it=PROJ.filter(p=>phaseOf(p)===k&&hit(p));if(!it.length)return;
   out+=`<div class="sect"><span class="lb ${PH[k].cls}">${M(PH[k].ic)}${PH[k].lb} · ${it.length}</span><span class="ln"></span></div>`;
   out+=it.map(p=>`<button class="row click" onclick="openP('${p.id}')">${icon(p.cuisine)}
    <div class="m"><div class="nm">${esc(p.ten)}</div><div class="mt">${esc(p.quan)} · ${PH[k].hint}</div>${pips(p)}</div>
    ${badge(k)}</button>`).join('');
  });
- return `<div class="chips">${chips}</div>${out||`<div class="empty">${EMPTY}<div style="margin-top:8px">Chặng này đang trống.</div></div>`}`;
+ return bar+`<div class="chips">${chips}</div>`+(out||`<div class="empty">${EMPTY}<div style="margin-top:8px">${S.qq?'Không thấy quán nào tên như vậy trong hàng đợi.':'Chặng này đang trống.'}</div></div>`);
 }
 function kho(){
  const ds=[...new Set(QUAN.map(q=>q.quan))].sort();
@@ -543,9 +547,9 @@ function kho(){
    <div class="m"><div class="nm">${q.thich?M(I.heart,'#E86A8E'):''}${esc(q.ten)}</div>
    <div class="mt">${esc(q.quan)} · món ${esc(q.cuisine)}</div></div>
    <a class="nbtn" href="${q.url}" target="_blank" title="Mở quán trong Notion">${M(I.ext)}</a>
-   <button class="btn sm ${q.picked?'on':'pick'}" onclick="pick('${q.id}')">${q.picked?'Đã pick ✓':'Pick'}</button></div>`).join('')
+   <button class="btn sm ${q.picked?'on':'pick'}" onclick="${q.picked?`openFromQuan('${q.id}')`:`pick('${q.id}')`}">${q.picked?'Viết tiếp →':'Pick'}</button></div>`).join('')
   :`<div class="empty">${EMPTY}<div style="margin-top:8px">Không tìm thấy quán nào.</div></div>`;
- return `<div class="bar"><input class="search" placeholder="Tìm tên quán…" value="${esc(S.q)}" oninput="setQ(this.value)">
+ return `<div class="bar"><input class="search" id="ksearch" placeholder="Tìm tên quán…" value="${esc(S.q)}" oninput="setQ(this.value)">
    <select onchange="setQuan(this.value)">${opts}</select>
    <button class="chip ${S.onlyLiked?'on':''}" onclick="toggleLiked()">${M(I.heart,'#E86A8E')}Quán thích</button>
    <button class="chip ${S.onlyDadi?'on':''}" onclick="S.onlyDadi=!S.onlyDadi;render()">Đã đi rồi</button></div>
@@ -613,10 +617,17 @@ function detail(){
 }
 function go(t){S.tab=t;render()}
 function setF(k){S.filter=k;render()}
-function setQ(v){S.q=v;const el=document.activeElement,pos=el.selectionStart;render();const n=document.querySelector('.search');if(n){n.focus();n.setSelectionRange(pos,pos)}}
+function keepFocus(id,pos){const n=document.getElementById(id);if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(e){}}}
+function setQ(v){const pos=document.activeElement.selectionStart;S.q=v;render();keepFocus('ksearch',pos)}
+function setQQ(v){const pos=document.activeElement.selectionStart||v.length;S.qq=v;render();keepFocus('qsearch',pos)}
 function setQuan(v){S.quan=v;render()}
 function toggleLiked(){S.onlyLiked=!S.onlyLiked;render()}
 function openP(id){S.open=id;S.step=null;S.edit={};render()}
+function openFromQuan(qid){
+  const p=PROJ.find(x=>x.quanId===qid);
+  if(!p){toast('Chưa thấy row của quán này, thử tải lại app');return}
+  S.tab='queue'; S.open=p.id; S.step=null; S.edit={}; _view=''; render();
+}
 function openStep(k){S.step=S.step===k?'__none__':k;render()}
 function P(){return PROJ.find(x=>x.id===S.open)}
 function ed(k,v){P()[k]=v}
@@ -654,9 +665,10 @@ async function pick(id){
   try{
     const r=await api('/api/pick',{method:'POST',body:JSON.stringify({quanId:q.id,ten:q.ten})});
     q.picked=true;
-    PROJ.push({id:r.id,url:r.url,ten:q.ten,quan:q.quan,cuisine:q.cuisine,quanUrl:q.url,
+    PROJ.push({id:r.id,url:r.url,ten:q.ten,quan:q.quan,cuisine:q.cuisine,quanUrl:q.url,quanId:q.id,
       raw:'',long:'',ig:'',fanpage:'',gmap:'',substack:'',canva:'',drive:'',posted:false,photos:false});
-    render(); toast('Đã thêm · hàng đợi có '+PROJ.length+' quán');
+    S.tab='queue'; S.open=r.id; S.step=null; S.edit={}; _view='';
+    render(); toast('Đã thêm vô Notion · viết luôn nha');
   }catch(e){ toast('Không tạo được: '+e.message); }
 }
 
